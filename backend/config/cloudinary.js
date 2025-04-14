@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary'
-// import path from 'path'
+
 
 const connectCloudinary = async () => {
 

@@ -12,7 +12,7 @@ const addTutor = async (req, res) => {
       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
       const imageFile = req.file;
 
-      //console.log("File received", req.file);
+     
 
       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
          return res.json({ success: false, message: "Missing Details" })
@@ -58,7 +58,7 @@ const addTutor = async (req, res) => {
          about,
          fees,
          address: JSON.parse(address),
-         // address,
+         
          date: Date.now()
       }
 
@@ -75,7 +75,7 @@ const addTutor = async (req, res) => {
 
 }
 
-// API For admin Login
+
 const loginAdmin = async (req, res) => {
    try {
 
@@ -117,7 +117,7 @@ const allTutors = async (req, res) => {
 
 const appointmentsAdmin = async (req, res) => {
    try {
-      const bookings = await appointmentModel.find({})              // Here i write bookings but in video appointments
+      const bookings = await appointmentModel.find({})             
       res.json({ success: true, bookings })
 
    } catch (error) {
@@ -131,7 +131,7 @@ const appointmentsAdmin = async (req, res) => {
 
 const appointmentCancel = async (req, res) => {
    try {
-   //   const userId = req.userId;
+
      const { appointmentId } = req.body;
  
      const appointmentData = await appointmentModel.findById(appointmentId);
@@ -140,9 +140,7 @@ const appointmentCancel = async (req, res) => {
        return res.json({ success: false, message: 'Appointment not found' });
      }
  
-   //   if (appointmentData.userId.toString() !== userId) {
-   //     return res.json({ success: false, message: 'Unauthorized action' });
-   //   }
+ 
  
      await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
  
