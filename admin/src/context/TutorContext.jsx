@@ -31,55 +31,7 @@ const TutorContextProvider = ({ children }) => {
         }
     };
 
-    // const completeAppointment = async (appointmentId) => {
-
-    //     try {
-
-    //         const {data} = await axios.post(`${backendUrl}/api/tutor/complete-appointment`, {
-    //             headers: {
-    //                 dtoken: dToken
-    //             }
-    //         })
-    //         if (data.success) {
-    //             toast.success(data.message)
-    //             getBookings()
-                
-    //         }else{
-    //             toast.error(data.message)
-    //         }
-            
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error("Failed to fetch bookings");
-            
-    //     }
-
-    // }
-
-    // const cancelAppointment = async (appointmentId) => {
-
-    //     try {
-
-    //         const {data} = await axios.post(`${backendUrl}/api/tutor/cancel-appointment`, {
-    //             headers: {
-    //                 dtoken: dToken
-    //             }
-    //         })
-    //         if (data.success) {
-    //             toast.success(data.message)
-    //             getBookings()
-                
-    //         }else{
-    //             toast.error(data.message)
-    //         }
-            
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error("Failed to fetch bookings");
-            
-    //     }
-
-    // }
+   
 
     const completeAppointment = async (appointmentId) => {
         try {
@@ -104,31 +56,14 @@ const TutorContextProvider = ({ children }) => {
         }
     };
 
-    // const appointmentComplete = async (req, res) => {
-    //     try {
-    //         const { appointmentId } = req.body;
-    //         const wonId = req.wonId; // ✅ extracted from token by middleware
-    
-    //         const appointmentData = await appointmentModel.findById(appointmentId);
-    
-    //         if (appointmentData && appointmentData.wonId === wonId) {
-    //             await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true });
-    //             return res.json({ success: true, message: 'Appointment Completed' });
-    //         } else {
-    //             return res.json({ success: false, message: 'Mark Failed' });
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.json({ success: false, message: error.message });
-    //     }
-    // };
+  
     
 
     const cancelAppointment = async (appointmentId) => {
         try {
             const { data } = await axios.post(
                 `${backendUrl}/api/tutor/cancel-appointment`,
-                { appointmentId }, // body
+                { appointmentId }, 
                 {
                     headers: {
                         dtoken: dToken

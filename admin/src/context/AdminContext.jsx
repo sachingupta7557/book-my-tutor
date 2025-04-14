@@ -1,90 +1,81 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export const AdminContext = createContext()
 
 const AdminContextProvider = (props) => {
 
-    const [aToken,setAToken] = useState(localStorage.getItem('aToken')? localStorage.getItem('aToken'): '' )
-    const [tutors,setTutors] = useState([])
+    const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : '')
+    const [tutors, setTutors] = useState([])
 
-    // 7 April 2025 5:35 
 
-    const [bookings,setBookings] =useState([])
-    const [dashData,setDashData] = useState(false)
 
-    // const [aToken, setAToken] = useState('')
-    // const [tutors, setTutors] = useState([])
+    const [bookings, setBookings] = useState([])
+    const [dashData, setDashData] = useState(false)
+
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-    // useEffect(() => {
-    //     const storedToken = localStorage.getItem('aToken')
-    //     if (storedToken) {
-    //         setAToken(storedToken)
-    //     }
-    // }, [])
 
     const getAllTutors = async () => {
 
-        try{
-
-            const {data} = await axios.post(backendUrl + '/api/admin/all-tutors',{},{headers:{aToken}})
-            // const { data } = await axios.post(`${backendUrl}/api/admin/all-tutors`, {}, { headers: { aToken } })
-               if(data.success){
-                   setTutors(data.tutors)
-                   console.log(data.tutors);
-               } else {
-                  toast.error(data.message)
-               }
-
-        }catch(error){
-            toast.error(error.message)
-
-        }
-
-    } 
-
-    const changeAvailablity = async (wonId) => {
-
         try {
-            const {data} = await axios.post(backendUrl + '/api/admin/change-availablity', {wonId},{headers:{aToken}})
-            // const { data } = await axios.post(`${backendUrl}/api/admin/change-availability`, { wonId }, { headers: { aToken } })
 
-            if(data.success){
-                toast.success(data.message)
-                getAllTutors()
+            const { data } = await axios.post(backendUrl + '/api/admin/all-tutors', {}, { headers: { aToken } })
 
-            }else{
+            if (data.success) {
+                setTutors(data.tutors)
+                console.log(data.tutors);
+            } else {
                 toast.error(data.message)
-
             }
 
-            
         } catch (error) {
             toast.error(error.message)
-            
+
         }
 
     }
 
-    // 7 April 2025 5:25 P:M 
+    const changeAvailablity = async (wonId) => {
+
+        try {
+            const { data } = await axios.post(backendUrl + '/api/admin/change-availablity', { wonId }, { headers: { aToken } })
+
+            if (data.success) {
+                toast.success(data.message)
+                getAllTutors()
+
+            } else {
+                toast.error(data.message)
+
+            }
+
+
+        } catch (error) {
+            toast.error(error.message)
+
+        }
+
+    }
+
+
     const getAllBookings = async () => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/admin/bookings' , {headers:{aToken}})
-            if(data.success){
+            const { data } = await axios.get(backendUrl + '/api/admin/bookings', { headers: { aToken } })
+            if (data.success) {
                 setBookings(data.bookings)
                 console.log(data.bookings)
 
-            }else {
+            } else {
                 toast.error(data.message)
             }
 
-            
+
         } catch (error) {
             toast.error(error.message)
-            
+
         }
     }
 
@@ -92,30 +83,30 @@ const AdminContextProvider = (props) => {
 
         try {
 
-            const {data} = await axios.post(backendUrl + '/api/admin/cancel-appointment', {appointmentId},{headers:{aToken}})
-            if(data.success){
+            const { data } = await axios.post(backendUrl + '/api/admin/cancel-appointment', { appointmentId }, { headers: { aToken } })
+            if (data.success) {
                 toast.success(data.message)
                 getAllBookings()
 
-            }else{
+            } else {
                 toast.error(data.message)
             }
-            
+
         } catch (error) {
             toast.error(error.message)
-            
+
         }
 
     }
 
     const getDashData = async () => {
         try {
-            const {data} = await axios.get(backendUrl + '/api/admin/dashboard',{headers:{aToken}})
-            if(data.success){
+            const { data } = await axios.get(backendUrl + '/api/admin/dashboard', { headers: { aToken } })
+            if (data.success) {
                 setDashData(data.dashData)
                 console.log(data.dashData)
 
-            }else {
+            } else {
                 toast.error(data.message)
             }
         } catch (error) {
@@ -125,20 +116,20 @@ const AdminContextProvider = (props) => {
 
     const value = {
 
-        aToken,setAToken,
-        backendUrl,tutors,
-        getAllTutors,changeAvailablity,
-        bookings,setBookings,
+        aToken, setAToken,
+        backendUrl, tutors,
+        getAllTutors, changeAvailablity,
+        bookings, setBookings,
         getAllBookings,
         cancelAppointment,
-        dashData,getDashData
+        dashData, getDashData
     }
 
-     return(
+    return (
         <AdminContext.Provider value={value}>
             {props.children}
         </AdminContext.Provider>
-     )
+    )
 
 }
 export default AdminContextProvider

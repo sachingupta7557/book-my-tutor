@@ -1,5 +1,3 @@
-
-
 import React, { useContext } from 'react';
 import { assets } from '../assets/assets';
 import { AdminContext } from '../context/AdminContext';
@@ -25,7 +23,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center px-4 sm:px-10 py-4 border-b bg-white shadow-sm">
-      {/* Left: Logo and Role */}
+
       <div className="flex items-center gap-3">
         <img
           className="w-14 sm:w-20 cursor-pointer hover:opacity-90 transition"
@@ -37,7 +35,7 @@ const Navbar = () => {
         </span>
       </div>
 
-      {/* Right: Logout Button */}
+
       <button
         onClick={logout}
         className="bg-primary text-white text-sm font-medium px-6 sm:px-10 py-2 rounded-full hover:bg-primary/90 transition"

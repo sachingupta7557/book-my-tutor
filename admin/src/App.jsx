@@ -26,19 +26,19 @@ const App = () => {
   return aToken || dToken ? (
     <div className='bg-[#F8F9FD]' >
       <ToastContainer />
-      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+    
       <Navbar/>
       <div className='flex items-start'>
         <Sidebar/>
         <Routes> 
-          {/* Admin Route */}
+          
           <Route path = '/' element={<></>}/> 
           <Route path = '/admin-dashboard' element={<Dashboard/>} />
           <Route path = '/all-bookings' element={<AllBookings/>} />
           <Route path = '/add-tutor' element={<AddTutor/>} />
           <Route path = '/tutor-list' element={<TutorsList/>} />
 
-          {/* Tutor Route */}
+          
           <Route path = '/tutor-dashboard' element={<TutorDashboard/>} />
           <Route path = '/tutor-appointments' element={<TutorAppointments/>} />
           <Route path = '/tutor-profile' element={<TutorProfile/>} />
