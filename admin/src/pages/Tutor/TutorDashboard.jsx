@@ -1,5 +1,3 @@
-
-
 import React, { useContext, useEffect } from 'react';
 import { TutorContext } from '../../context/TutorContext';
 import { assets } from '../../assets/assets';
@@ -19,7 +17,7 @@ const TutorDashboard = () => {
     dashData && (
       <div className="m-5">
 
-        {/* Stat Cards */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mb-10">
           <div className="flex items-center gap-4 bg-white p-5 rounded-xl border shadow-sm hover:shadow-md transition-transform hover:scale-[1.02]">
             <img className="w-14" src={assets.earning_icon} alt="Earnings" />
@@ -46,7 +44,7 @@ const TutorDashboard = () => {
           </div>
         </div>
 
-        {/* Latest Bookings */}
+        
         <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
           <div className="flex items-center gap-3 px-6 py-4 border-b bg-gray-50">
             <img className="w-5 h-5" src={assets.list_icon} alt="List Icon" />

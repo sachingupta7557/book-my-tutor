@@ -1,6 +1,3 @@
-
-
-
 import React, { useContext, useState } from 'react';
 import { AdminContext } from '../context/AdminContext';
 import axios from 'axios';
@@ -95,7 +92,7 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Email Field */}
+  
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
           <input
@@ -108,7 +105,7 @@ const Login = () => {
           />
         </div>
 
-        {/* Password Field */}
+        
         {view === 'login' && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>

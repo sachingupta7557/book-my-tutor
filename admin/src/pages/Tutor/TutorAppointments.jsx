@@ -1,5 +1,3 @@
-
-
 import React, { useContext, useEffect } from 'react';
 import { TutorContext } from '../../context/TutorContext';
 import { AppContext } from '../../context/AppContext';
@@ -20,7 +18,7 @@ const TutorAppointments = () => {
       <h2 className="text-xl font-semibold mb-4 text-gray-800">All Appointments</h2>
 
       <div className="bg-white border rounded-xl shadow-sm overflow-hidden max-h-[80vh] min-h-[50vh] overflow-y-scroll">
-        {/* Table Header */}
+        
         <div className="hidden sm:grid grid-cols-[0.5fr_2fr_1fr_1fr_3fr_1fr_1fr] gap-4 bg-gray-100 text-gray-700 px-6 py-3 text-sm font-medium border-b">
           <p>#</p>
           <p>Student</p>
@@ -31,9 +29,9 @@ const TutorAppointments = () => {
           <p>Action</p>
         </div>
 
-        {/* Appointments List */}
+        
         {bookings
-          .slice() // clone the array
+          .slice() 
           .reverse()
           .map((item, index) => (
             <div
@@ -42,13 +40,13 @@ const TutorAppointments = () => {
             >
               <p className="hidden sm:block">{index + 1}</p>
 
-              {/* Student Info */}
+              
               <div className="flex items-center gap-3">
                 <img src={item.userData.image} alt="" className="w-10 h-10 rounded-full object-cover border" />
                 <p className="text-sm font-medium">{item.userData.name}</p>
               </div>
 
-              {/* Payment Type */}
+              
               <div>
                 <span className={`text-xs font-medium px-3 py-1 rounded-full border 
                   ${item.payment ? 'text-green-600 border-green-200 bg-green-50' : 'text-yellow-600 border-yellow-200 bg-yellow-50'}`}>
@@ -56,20 +54,20 @@ const TutorAppointments = () => {
                 </span>
               </div>
 
-              {/* Age */}
+          
               <p className="hidden sm:block">{calculateAge(item.userData.dob)}</p>
 
-              {/* Date and Time */}
+              
               <p className="text-sm text-gray-700">
                 {slotDateFormat(item.slotDate)}, {item.slotTime}
               </p>
 
-              {/* Fees */}
+            
               <p className="font-medium">
                 {currency} {item.amount}
               </p>
 
-              {/* Status or Actions */}
+            
               {item.cancelled ? (
                 <p className="text-red-500 text-xs font-semibold">Cancelled</p>
               ) : item.isCompleted ? (

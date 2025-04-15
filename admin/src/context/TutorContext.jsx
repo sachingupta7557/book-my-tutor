@@ -37,7 +37,7 @@ const TutorContextProvider = ({ children }) => {
         try {
             const { data } = await axios.post(
                 `${backendUrl}/api/tutor/complete-appointment`,
-                { appointmentId }, // body
+                { appointmentId }, 
                 {
                     headers: {
                         dtoken: dToken

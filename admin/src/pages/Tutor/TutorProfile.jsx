@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState, useContext } from 'react';
 import { TutorContext } from '../../context/TutorContext';
 import { AppContext } from '../../context/AppContext';
@@ -48,7 +46,7 @@ const TutorProfile = () => {
     profileData && (
       <div className="min-h-screen bg-gray-50 py-10 px-4">
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-8">
-          {/* Profile Image */}
+          
           <div className="flex justify-center">
             <img
               className="rounded-xl w-full max-w-xs border border-gray-300 shadow-md object-cover"
@@ -57,7 +55,7 @@ const TutorProfile = () => {
             />
           </div>
 
-          {/* Profile Info */}
+        
           <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4 border border-gray-100">
             <div>
               <h2 className="text-2xl font-bold text-gray-800">{profileData.name}</h2>

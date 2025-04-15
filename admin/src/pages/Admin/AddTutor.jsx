@@ -85,7 +85,7 @@ const AddTutor = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-gray-700">
-          {/* Left Column */}
+          
           <div className="space-y-4">
             <div>
               <p className="mb-1">Tutor Name</p>
@@ -117,7 +117,7 @@ const AddTutor = () => {
             </div>
           </div>
 
-          {/* Right Column */}
+          
           <div className="space-y-4">
             <div>
               <p className="mb-1">Speciality</p>
@@ -144,13 +144,13 @@ const AddTutor = () => {
           </div>
         </div>
 
-        {/* About */}
+        
         <div>
           <p className="mb-2">About Tutor</p>
           <textarea onChange={(e) => setAbout(e.target.value)} value={about} className="w-full border border-gray-300 rounded-xl px-4 py-3" placeholder="Write about the tutor" rows={5} required />
         </div>
 
-        {/* Submit */}
+        
         <div className="pt-4">
           <button type="submit" className="bg-primary text-white px-6 py-3 rounded-full shadow hover:shadow-md transition-all duration-300">
             Add Tutor
