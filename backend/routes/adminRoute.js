@@ -1,7 +1,6 @@
 import express from 'express'
 import { addTutor , adminDashboard, allTutors, appointmentCancel, appointmentsAdmin, loginAdmin} from '../controllers/adminController.js'
 import upload from '../middlewares/multer.js'
-// import upload from '../middlewares/upload.js'
 import authAdmin from '../middlewares/authAdmin.js'
 import { changeAvailablity } from '../controllers/tutorController.js'
 

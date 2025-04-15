@@ -97,7 +97,7 @@ const loginAdmin = async (req, res) => {
    }
 }
 
-// API to get all tutors list for admin panel
+
 
 const allTutors = async (req, res) => {
    try {
@@ -127,7 +127,7 @@ const appointmentsAdmin = async (req, res) => {
    }
 }
 
-// API FOR APPOINTMENT CANCELLATION
+
 
 const appointmentCancel = async (req, res) => {
    try {
@@ -165,7 +165,7 @@ const appointmentCancel = async (req, res) => {
    }
  }
 
- // API TO GET DASHBOARD DATA FOR ADMIN PANEL 
+  
  const adminDashboard = async (req,res) => {
    try {
 

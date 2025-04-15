@@ -1,7 +1,4 @@
-
-
-
- import tutorModel from "../models/tutorModel.js"
+import tutorModel from "../models/tutorModel.js"
  import bcrypt from 'bcrypt'
  import jwt from 'jsonwebtoken'
  import appointmentModel from "../models/appointmentModel.js"
@@ -40,7 +37,7 @@ import nodemailer from 'nodemailer';
      }
  }
  
- // API FOR TUTOR LOGIN
+
  
  const loginTutor = async (req, res) => {
      try {
@@ -75,7 +72,7 @@ import nodemailer from 'nodemailer';
  
  }
  
- //  API TO GET TUTOR APPOINTMENTS FOR TUTOR PANEL
+ 
  
  const appointmentsTutor = async (req, res) => {
      try {
@@ -93,7 +90,7 @@ import nodemailer from 'nodemailer';
  
  const appointmentComplete = async (req, res) => {
    try {
-     const wonId = req.wonId; // from authTutor middleware
+     const wonId = req.wonId; 
      const { appointmentId } = req.body;
  
      const appointmentData = await appointmentModel.findById(appointmentId);
@@ -117,14 +114,13 @@ import nodemailer from 'nodemailer';
  
  const appointmentCancel = async (req, res) => {
      try {
-       const wonId = req.wonId; // from authTutor middleware
+       const wonId = req.wonId; 
        const { appointmentId } = req.body;
    
        const appointmentData = await appointmentModel.findById(appointmentId);
    
        if (appointmentData && appointmentData.wonId === wonId) {
-         await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true});    //Here i change isCancelled:false -> cancelled:true
-                                                                                         // so output find perfectly
+         await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true});    
          return res.json({ success: true, message: 'Appointment Cancelled' });
        } else {
          return res.json({ success: false, message: 'Unauthorized or invalid appointment' });
@@ -140,25 +136,25 @@ import nodemailer from 'nodemailer';
  
    const tutorDashboard = async (req, res) => {
      try {
-       const wonId = req.wonId; // ✅ use decoded ID from auth middleware
+       const wonId = req.wonId; 
    
        const bookings = await appointmentModel.find({ wonId });
    
        let earnings = 0;
-       const students = new Set(); // ✅ more efficient than array.includes()
+       const students = new Set(); 
    
        bookings.forEach((item) => {
          if (item.isCompleted && item.payment) {
            earnings += item.amount;
          }
-         students.add(item.userId.toString()); // ensure consistent type
+         students.add(item.userId.toString()); 
        });
    
        const dashData = {
          earnings,
          bookings: bookings.length,
          students: students.size,
-         latestBookings: bookings.slice().reverse().slice(0, 5), // ✅ clean reverse
+         latestBookings: bookings.slice().reverse().slice(0, 5), 
        };
    
        res.json({ success: true, dashData });
@@ -172,7 +168,7 @@ import nodemailer from 'nodemailer';
  
    const tutorProfile = async (req, res) => {
      try {
-       const wonId = req.wonId; // ✅ Get from authTutor middleware
+       const wonId = req.wonId;
    
        const profileData = await tutorModel.findById(wonId).select('-password');
    
@@ -193,16 +189,16 @@ import nodemailer from 'nodemailer';
  
    const updateTutorProfile = async (req, res) => {
      try {
-       const wonId = req.wonId; // ✅ From JWT middleware
+       const wonId = req.wonId; 
        const { fees, address, available } = req.body;
    
-      // Optional: Check if tutor exists
+      
        const tutor = await tutorModel.findById(wonId);
        if (!tutor) {
          return res.json({ success: false, message: 'Tutor not found' });
        }
    
-       // Update profile fields
+       
        await tutorModel.findByIdAndUpdate(wonId, {
          fees,
          address,
@@ -217,7 +213,7 @@ import nodemailer from 'nodemailer';
      }
    };
 
-   // Api for forgot 
+    
 
 
 const forgotPasswordTutor = async (req, res) => {
@@ -240,7 +236,7 @@ const forgotPasswordTutor = async (req, res) => {
     });
 
     const resetLink = `${process.env.FRONTEND_URL2}/reset-password-tutor/${resetToken}`;
-    // const resetLink = `http://localhost:5174/reset-password-tutor/${resetToken}`
+    
 
     await transporter.sendMail({
       to: tutor.email,

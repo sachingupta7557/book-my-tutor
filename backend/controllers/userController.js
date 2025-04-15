@@ -1,5 +1,3 @@
-
-
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 import userModel from '../models/userModel.js'
@@ -14,7 +12,7 @@ import crypto from 'crypto'
 
 
 
-// API to register user
+
 const registerUser = async (req, res) => {
 
   try {
@@ -36,7 +34,7 @@ const registerUser = async (req, res) => {
       return res.json({ success: false, message: "enter a strong password" })
     }
 
-    // hashing user password
+    
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
@@ -66,7 +64,7 @@ const registerUser = async (req, res) => {
   }
 }
 
-// API for user login 
+ 
 const loginUser = async (req, res) => {
   try {
 
@@ -97,7 +95,7 @@ const loginUser = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const userId = req.userId; // <-- fixed
+    const userId = req.userId; 
     const userData = await userModel.findById(userId).select('-password');
     res.json({ success: true, userData });
   } catch (error) {
@@ -111,7 +109,7 @@ const updateProfile = async (req, res) => {
   try {
     const { name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
-    const userId = req.userId; // ✅ Get from auth middleware
+    const userId = req.userId; 
 
     if (!name || !phone || !dob || !gender) {
       return res.json({ success: false, message: "Data Missing" });
@@ -164,7 +162,7 @@ const bookAppointment = async (req, res) => {
 
     let slots_booked = wonData.slots_booked;
 
-    // Check for slot availability
+    
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
         return res.json({ success: false, message: 'Slot Not Available' });
@@ -192,7 +190,7 @@ const bookAppointment = async (req, res) => {
     const newAppointment = new appointmentModel(appointmentData);
     await newAppointment.save();
 
-    // Save updated slot info
+    
     await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
 
     res.json({ success: true, message: 'Appointment Booked' });
@@ -203,11 +201,11 @@ const bookAppointment = async (req, res) => {
   }
 }
 
-// API to get user appointments for frontend mybookings page
+
 
 const listBooking = async (req, res) => {
   try {
-    const userId = req.userId; // ✅ Use the one from auth middleware
+    const userId = req.userId; 
 
     const bookings = await appointmentModel.find({ userId });
 
@@ -263,7 +261,7 @@ const razorpayInstance = new razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET
 })
 
-// API to make payment of appointment using razorpay
+
 
 const paymentRazorpay = async (req, res) => {
 
@@ -277,7 +275,7 @@ const paymentRazorpay = async (req, res) => {
 
     }
 
-    //  creating options for razorpay payment
+    
 
     const options = {
       amount: appointmentData.amount * 100,
@@ -285,7 +283,7 @@ const paymentRazorpay = async (req, res) => {
       receipt: appointmentId,
     }
 
-    // creation of an order 
+    
     const order = await razorpayInstance.orders.create(options)
 
     res.json({ success: true, order })
@@ -298,7 +296,7 @@ const paymentRazorpay = async (req, res) => {
 
 }
 
-// API TO VERIFY PAYMENT OF RAZORPAY
+
 
 const verifyRazorpay = async (req, res) => {
   try {
@@ -306,7 +304,7 @@ const verifyRazorpay = async (req, res) => {
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
 
-    // console.log(orderInfo)
+    
     if (orderInfo.status === 'paid') {
       await appointmentModel.findByIdAndUpdate(orderInfo.receipt, { payment: true })
       res.json({ success: true, message: "Payment Successfull" })
@@ -324,7 +322,7 @@ const verifyRazorpay = async (req, res) => {
   }
 } 
 
-// api for forget password
+
 
 
 const forgotPassword = async (req, res) => {
@@ -336,7 +334,7 @@ const forgotPassword = async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
 
-    // Generate reset token
+    
     const resetToken = crypto.randomBytes(32).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour
 
@@ -344,16 +342,16 @@ const forgotPassword = async (req, res) => {
     user.resetTokenExpiry = resetTokenExpiry;
     await user.save();
 
-    // Send reset email
+    
     const transporter = nodemailer.createTransport({
-      service: "Gmail", // or your preferred email provider
+      service: "Gmail", 
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    // const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    
     const resetLink = `http://localhost:5173/reset-password/${resetToken}`
 
 
@@ -371,7 +369,7 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// api for reset password
+
 
 const resetPassword = async (req, res) => {
   try {
