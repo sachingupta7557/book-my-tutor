@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-// import {tutors} from "../assets/assets";
+
 import axios from 'axios'
 import {toast} from 'react-toastify'
 export const AppContext = createContext()

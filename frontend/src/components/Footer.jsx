@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className = 'md:max-10'>
         <div className = 'flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
-            {/* -----Left Section------ */}
+            
 
             <div >
                 <img className='mb-5 w-40' src={assets.logo9} alt="" />
@@ -13,7 +13,7 @@ const Footer = () => {
                 Trusted by hundreds of students and tutors across the country, BookMyTutor ensures safe, convenient, and effective one-on-one learning experiences. Your growth is our priority.</p>
             </div>
 
-            {/* -----Center Section------ */}
+        
 
             <div>
                 <p className = 'text-xl font-medium mb-5'>COMPANY</p>
@@ -25,7 +25,7 @@ const Footer = () => {
                 </ul>
             </div>
 
-            {/* -----Right Section------ */}
+        
 
             <div>
                 <p className = 'text-xl font-medium mb-5'>GET IN TOUCH</p>
@@ -38,7 +38,7 @@ const Footer = () => {
 
         </div>
 
-        {/* ---------- Copyright Text ------------ */}
+        
 
         <div>
            <hr/>

@@ -7,19 +7,7 @@ import { toast } from 'react-toastify'
 
 const MyProfile = () => {
 
-  // const [userData, setUserData] = useState({
-  //   name: "Edward Vincent",
-  //   image: assets.profile_pic,
-  //   email: 'sh@gmail.com',
-  //   phone: '+1 222 333  555',
-  //   address: {
-  //     line1: "57th Cross, Richmond",
-  //     line2: "Circle, Church Road,London"
-  //   },
-  //   gender: "Male",
-  //   dob: "2001-01-20"
-
-  // })
+  
 
   const { userData, setUserData,token,backendUrl,loadUserProfileData } = useContext(AppContext)
 
@@ -59,9 +47,7 @@ const MyProfile = () => {
 
 
       
-    // } catch (error) {
-      
-    // }
+    
 
 
   
@@ -79,7 +65,7 @@ const MyProfile = () => {
         </label>
         : <img className='w-36 rounded' src={userData.image} alt="" />
       }
-                 {/* <img className='w-36 rounded' src={userData.image} alt="" /> */}
+                 
       {
         isEdit
           ? <input className='bg-gray-50 text-3xl font-medium max-w-60 mt-4' type="text" value={userData.name} onChange={e => setUserData(prev => ({ ...prev, name: e.target.value }))} />
@@ -105,11 +91,6 @@ const MyProfile = () => {
                  <br />
                  <input className = 'bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))} value={userData.address.line2} type="text" />
                
-                                    {/*-------- BELOW COMMENT LINE IS CHATGPT LINE FOR ABOVE TWO LINES  */}
-
-                {/* <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line1: e.target.value } }))} value={userData.address?.line1 || ''} type="text" />
-                <br />
-                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))} value={userData.address?.line2 || ''} type="text" /> */}
 
               </p>
               : <p className='text-gray-500'>

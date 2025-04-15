@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// export const Contact = () => {
-//   return (
-//     <div>
-        
-//     </div>
-//   )
-// }
-
-// export default Contact;
-
 import React from 'react';
 import { assets } from '../assets/assets';
 

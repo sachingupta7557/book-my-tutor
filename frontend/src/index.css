@@ -1,4 +1,4 @@
-/* @import "tailwindcss"; */
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
@@ -9,27 +9,7 @@
 }
 
 
-/* @theme 'primary':"#5f6FFF" */
 
-/* @theme:{
-      extend: {
-        colors:{
-           'primary':"#5f6FFF"
-        },
-       },
-} */
-/* .theme {
-         extend: {
-         colors:{
-           'primary':"#5f6FFF"
-         }
-       },
-     }
-  */
-
-  /* @theme {
-   --bg-primary:"5f6FFF"
-  } */
 
 .active hr{
     @apply block

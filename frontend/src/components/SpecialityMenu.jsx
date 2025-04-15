@@ -25,4 +25,3 @@ import { Link } from 'react-router-dom'
 
 export default SpecialityMenu
 
-// No Change
