@@ -48,6 +48,7 @@ const App = () => {
 
           <Route path="/forgot-password-tutor" element={<ForgotPasswordTutor />} />
          <Route path="/reset-password-tutor/:token" element={<ResetPasswordTutor />} />
+         
         
 
         </Routes>
