@@ -9,8 +9,7 @@ import {
   tutorProfile,
   updateTutorProfile,
   forgotPasswordTutor,
-  resetPasswordTutor
- 
+  resetPasswordTutor,
 } from '../controllers/tutorController.js';
 import authTutor from '../middlewares/authTutor.js';
 
@@ -25,14 +24,12 @@ tutorRouter.post('/cancel-appointment', authTutor, appointmentCancel);
 
 tutorRouter.get('/dashboard', authTutor, tutorDashboard);
 tutorRouter.get('/profile', authTutor, tutorProfile);
-tutorRouter.put('/update-profile', authTutor, updateTutorProfile); 
+tutorRouter.put('/update-profile', authTutor, updateTutorProfile);
 
 tutorRouter.post('/forgot-password', forgotPasswordTutor);
 tutorRouter.post('/reset-password/:token', resetPasswordTutor);
 
-
-
-
 export default tutorRouter;
+
 
 

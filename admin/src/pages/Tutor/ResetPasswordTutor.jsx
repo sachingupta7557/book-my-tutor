@@ -59,7 +59,3 @@ const ResetPasswordTutor = () => {
 
 export default ResetPasswordTutor;
 
-
-
-
-
