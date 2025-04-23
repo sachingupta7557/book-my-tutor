@@ -16,6 +16,7 @@ import TutorDashboard from './pages/Tutor/TutorDashboard';
 import TutorAppointments from './pages/Tutor/TutorAppointments';
 import TutorProfile from './pages/Tutor/TutorProfile';
 
+
 import ForgotPasswordTutor from './pages/Tutor/ForgotPasswordTutor';
 import ResetPasswordTutor from './pages/Tutor/ResetPasswordTutor';
 
@@ -37,6 +38,8 @@ const App = () => {
           <Route path = '/all-bookings' element={<AllBookings/>} />
           <Route path = '/add-tutor' element={<AddTutor/>} />
           <Route path = '/tutor-list' element={<TutorsList/>} />
+        
+
 
           
           <Route path = '/tutor-dashboard' element={<TutorDashboard/>} />
