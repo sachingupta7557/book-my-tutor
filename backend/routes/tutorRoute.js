@@ -26,8 +26,8 @@ tutorRouter.get('/dashboard', authTutor, tutorDashboard);
 tutorRouter.get('/profile', authTutor, tutorProfile);
 tutorRouter.put('/update-profile', authTutor, updateTutorProfile);
 
-tutorRouter.post('/forgot-password', forgotPasswordTutor);
-tutorRouter.post('/reset-password/:token', resetPasswordTutor);
+tutorRouter.post('/forgot-password-tutor', forgotPasswordTutor);
+tutorRouter.post('/reset-password-tutor/:token', resetPasswordTutor);
 
 export default tutorRouter;
 

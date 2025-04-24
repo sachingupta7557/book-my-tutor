@@ -1,12 +1,12 @@
 // import React, { useContext, useState } from 'react';
 // import { AdminContext } from '../context/AdminContext';
-// import axios from 'axios';
-// import { toast } from 'react-toastify';
 // import { TutorContext } from '../context/TutorContext';
 // import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import { toast } from 'react-toastify';
 
 // const Login = () => {
-//   const [state, setState] = useState('Admin');
+//   const [role, setRole] = useState('Admin');
 //   const [view, setView] = useState('login');
 //   const [email, setEmail] = useState('');
 //   const [password, setPassword] = useState('');
@@ -14,176 +14,139 @@
 //   const { setDToken } = useContext(TutorContext);
 //   const navigate = useNavigate();
 
-//   const onSubmitHandler = async (event) => {
-//     event.preventDefault();
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
 
 //     if (view === 'forgot') {
 //       try {
-//         const url =
-//           state === 'Admin'
-//             ? `${backendUrl}/api/admin/forgot-password`
-//             : `${backendUrl}/api/tutor/forgot-password`;
-
+//         const url = `${backendUrl}/api/tutor/forgot-password`;
 //         const { data } = await axios.post(url, { email });
 
 //         if (data.success) {
-//           toast.success('Reset link sent to email!');
+//           toast.success('Reset link sent to tutor email!');
 //           setView('login');
 //         } else {
 //           toast.error(data.message);
 //         }
-//       } catch (error) {
-//         toast.error('Something went wrong. Please try again.');
-//         console.log(error);
+//       } catch (err) {
+//         toast.error('Failed to send reset link');
+//         console.log(err);
 //       }
-
 //       return;
 //     }
 
 //     try {
-//       if (state === 'Admin') {
-//         const { data } = await axios.post(backendUrl + '/api/admin/login', { email, password });
-//         if (data.success) {
+//       const url = `${backendUrl}/api/${role.toLowerCase()}/login`;
+//       const { data } = await axios.post(url, { email, password });
+
+//       if (data.success) {
+//         if (role === 'Admin') {
 //           localStorage.setItem('aToken', data.token);
 //           setAToken(data.token);
-//           toast.success('Admin login successful!');
-//           setTimeout(() => {
-//             navigate('/admin-dashboard');
-//           }, 1000);
+//           navigate('/admin-dashboard');
 //         } else {
-//           toast.error(data.message);
-//         }
-//       } else {
-//         const { data } = await axios.post(backendUrl + '/api/tutor/login', { email, password });
-//         if (data.success) {
 //           localStorage.setItem('dToken', data.token);
 //           setDToken(data.token);
-//           toast.success('Tutor login successful!');
-//           setTimeout(() => {
-//             navigate('/tutor-dashboard');
-//           }, 1000);
-//         } else {
-//           toast.error(data.message);
+//           navigate('/tutor-dashboard');
 //         }
+//         toast.success(`${role} login successful!`);
+//       } else {
+//         toast.error(data.message);
 //       }
-//     } catch (error) {
-//       toast.error('Something went wrong. Please try again.');
-//       console.log(error);
+//     } catch (err) {
+//       toast.error('Login failed');
+//       console.log(err);
 //     }
 //   };
 
 //   return (
-//     <form
-//       onSubmit={onSubmitHandler}
-//       className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-50 to-purple-100 px-4"
-//     >
-//       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6 border border-gray-200">
+//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-purple-200 px-4">
+//       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6">
 //         <div className="text-center">
-//           <h2 className="text-3xl font-extrabold text-gray-800">
-//             {state}{' '}
-//             <span className="text-indigo-600">
-//               {view === 'login' ? 'Login' : 'Forgot Password'}
-//             </span>
+//           <h2 className="text-3xl font-bold text-gray-800">
+//             {role} <span className="text-purple-600">{view === 'login' ? 'Login' : 'Forgot Password'}</span>
 //           </h2>
-//           <p className="text-sm text-gray-500 mt-1">
+//           <p className="text-sm text-gray-500">
 //             {view === 'login'
-//               ? 'Welcome back! Please enter your credentials.'
-//               : 'Enter your email to receive a reset link.'}
+//               ? 'Enter your email and password to sign in.'
+//               : 'Enter your tutor email to receive a reset link.'}
 //           </p>
 //         </div>
 
-  
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+//         <form onSubmit={handleSubmit} className="space-y-4">
 //           <input
 //             type="email"
+//             placeholder="Email"
+//             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
 //             value={email}
 //             onChange={(e) => setEmail(e.target.value)}
 //             required
-//             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-//             placeholder="Enter your email"
 //           />
-//         </div>
 
-        
-//         {view === 'login' && (
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+//           {view === 'login' && (
 //             <input
 //               type="password"
+//               placeholder="Password"
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
 //               value={password}
 //               onChange={(e) => setPassword(e.target.value)}
 //               required
-//               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-//               placeholder="Enter your password"
 //             />
-//           </div>
-//         )}
+//           )}
 
-//         <button
-//           type="submit"
-//           className="w-full py-2 bg-indigo-600 text-white rounded-lg text-base font-semibold hover:bg-indigo-700 transition duration-300"
-//         >
-//           {view === 'login' ? 'Login' : 'Send Reset Link'}
-//         </button>
+//           <button
+//             type="submit"
+//             className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
+//           >
+//             {view === 'login' ? 'Login' : 'Send Reset Link'}
+//           </button>
+//         </form>
 
 //         <div className="text-center text-sm text-gray-600 space-y-2">
 //           {view === 'login' ? (
-//             <p>
-//               Forgot Password?{' '}
-//               <span
-//                 onClick={() => setView('forgot')}
-//                 className="text-indigo-600 hover:underline cursor-pointer"
-//               >
-//                 Click here
-//               </span>
-//             </p>
+//             role === 'Tutor' && (
+//               <p>
+//                 Forgot Password?{' '}
+//                 <span
+//                   className="text-purple-600 cursor-pointer hover:underline"
+//                   onClick={() => setView('forgot')}
+//                 >
+//                   Click here
+//                 </span>
+//               </p>
+//             )
 //           ) : (
 //             <p>
 //               Back to Login?{' '}
 //               <span
+//                 className="text-purple-600 cursor-pointer hover:underline"
 //                 onClick={() => setView('login')}
-//                 className="text-indigo-600 hover:underline cursor-pointer"
 //               >
 //                 Click here
 //               </span>
 //             </p>
 //           )}
 
-//           {state === 'Admin' ? (
-//             <p>
-//               Tutor Login?{' '}
-//               <span
-//                 onClick={() => {
-//                   setState('Tutor');
-//                   setView('login');
-//                 }}
-//                 className="text-indigo-600 hover:underline cursor-pointer"
-//               >
-//                 Click here
-//               </span>
-//             </p>
-//           ) : (
-//             <p>
-//               Admin Login?{' '}
-//               <span
-//                 onClick={() => {
-//                   setState('Admin');
-//                   setView('login');
-//                 }}
-//                 className="text-indigo-600 hover:underline cursor-pointer"
-//               >
-//                 Click here
-//               </span>
-//             </p>
-//           )}
+//           <p>
+//             {role === 'Admin' ? 'Tutor Login?' : 'Admin Login?'}{' '}
+//             <span
+//               className="text-purple-600 cursor-pointer hover:underline"
+//               onClick={() => {
+//                 setRole(role === 'Admin' ? 'Tutor' : 'Admin');
+//                 setView('login');
+//               }}
+//             >
+//               Switch to {role === 'Admin' ? 'Tutor' : 'Admin'}
+//             </span>
+//           </p>
 //         </div>
 //       </div>
-//     </form>
+//     </div>
 //   );
 // };
 
 // export default Login;
+
 
 import React, { useContext, useState } from 'react';
 import { AdminContext } from '../context/AdminContext';
@@ -204,29 +167,27 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Forgot password for tutor
     if (view === 'forgot') {
       try {
-        const url = `${backendUrl}/api/tutor/forgot-password`;
+        const url = `${backendUrl}/api/tutor/forgot-password-tutor`;
         const { data } = await axios.post(url, { email });
 
-        if (data.success) {
-          toast.success('Reset link sent to tutor email!');
-          setView('login');
-        } else {
-          toast.error(data.message);
-        }
+        toast.success(data.message || 'Reset link sent!');
+        setView('login');
       } catch (err) {
-        toast.error('Failed to send reset link');
+        toast.error(err.response?.data?.message || 'Failed to send reset link');
         console.log(err);
       }
       return;
     }
 
+    // Login
     try {
       const url = `${backendUrl}/api/${role.toLowerCase()}/login`;
       const { data } = await axios.post(url, { email, password });
 
-      if (data.success) {
+      if (data.token) {
         if (role === 'Admin') {
           localStorage.setItem('aToken', data.token);
           setAToken(data.token);
@@ -238,10 +199,10 @@ const Login = () => {
         }
         toast.success(`${role} login successful!`);
       } else {
-        toast.error(data.message);
+        toast.error(data.message || 'Login failed');
       }
     } catch (err) {
-      toast.error('Login failed');
+      toast.error(err.response?.data?.message || 'Login failed');
       console.log(err);
     }
   };
@@ -333,4 +294,3 @@ const Login = () => {
 };
 
 export default Login;
-
