@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+
+
 const ResetPasswordTutor = () => {
   const { token } = useParams();
+ 
+ 
   const [newPassword, setNewPassword] = useState('');
   const navigate = useNavigate();
 
@@ -14,6 +18,7 @@ const ResetPasswordTutor = () => {
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/tutor/reset-password/${token}`,
+       
         { newPassword }
       );
 
@@ -30,6 +35,8 @@ const ResetPasswordTutor = () => {
       toast.error('Something went wrong!');
     }
   };
+
+  
 
   return (
     <form
