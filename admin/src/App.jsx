@@ -46,11 +46,10 @@ const App = () => {
           <Route path = '/tutor-appointments' element={<TutorAppointments/>} />
           <Route path = '/tutor-profile' element={<TutorProfile/>} />
 
-          {/* <Route path="/forgot-password-tutor" element={<ForgotPasswordTutor />} />
-         <Route path="/reset-password-tutor/:token" element={<ResetPasswordTutor />} /> */}
+          
 
-<Route path="/forgot-password-tutor" element={<ForgotPasswordTutor />} />
-<Route path="/reset-password-tutor/:token" element={<ResetPasswordTutor />} />
+           <Route path="/forgot-password-tutor" element={<ForgotPasswordTutor />} />
+          <Route path="/reset-password-tutor/:token" element={<ResetPasswordTutor />} />
          
         
 
