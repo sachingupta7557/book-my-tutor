@@ -9,62 +9,76 @@ import razorpay from 'razorpay'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
-
-
-
-
 const registerUser = async (req, res) => {
-
   try {
-    const { name, email, password } = req.body
+    const { name, email, password } = req.body;
 
     if (!name || !password || !email) {
-
-      return res.json({ success: false, message: "Missing Details" })
-
+      return res.json({ success: false, message: "Missing Details" });
     }
 
     if (!validator.isEmail(email)) {
-      return res.json({ success: false, message: "enter a valid email" })
-
-
+      return res.json({ success: false, message: "Enter a valid email" });
     }
 
     if (password.length < 8) {
-      return res.json({ success: false, message: "enter a strong password" })
+      return res.json({ success: false, message: "Enter a strong password" });
     }
 
-    
 
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.json({ success: false, message: "User already exists" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const userData = {
       name,
       email,
       password: hashedPassword
+    };
+
+    const newUser = new userModel(userData);
+    const user = await newUser.save();
+
+
+    try {
+      const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+
+      await transporter.sendMail({
+        to: email,
+        subject: "Welcome to BookMyTutor 🎉",
+        html: `
+          <h2>Hi ${name},</h2>
+          <p>Welcome to <strong>BookMyTutor</strong>! We're excited to have you on board.</p>
+          <p>Start booking your favorite tutors now 🚀</p>
+        `
+      });
+
+      console.log(` Welcome email sent to ${email}`);
+    } catch (mailError) {
+      console.error(` Failed to send welcome email to ${email}:`, mailError.message);
     }
 
-    const newUser = new userModel(userData)
-
-    const user = await newUser.save()
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
-
-    res.json({ success: true, token })
-
-
-
-
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    res.json({ success: true, token });
 
   } catch (error) {
-    console.log(error)
-    res.json({ success: false, message: error.message })
-
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
-}
+};
 
- 
+
+
 const loginUser = async (req, res) => {
   try {
 
@@ -95,7 +109,7 @@ const loginUser = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const userId = req.userId; 
+    const userId = req.userId;
     const userData = await userModel.findById(userId).select('-password');
     res.json({ success: true, userData });
   } catch (error) {
@@ -109,7 +123,7 @@ const updateProfile = async (req, res) => {
   try {
     const { name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
-    const userId = req.userId; 
+    const userId = req.userId;
 
     if (!name || !phone || !dob || !gender) {
       return res.json({ success: false, message: "Data Missing" });
@@ -162,7 +176,7 @@ const bookAppointment = async (req, res) => {
 
     let slots_booked = wonData.slots_booked;
 
-    
+
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
         return res.json({ success: false, message: 'Slot Not Available' });
@@ -190,7 +204,7 @@ const bookAppointment = async (req, res) => {
     const newAppointment = new appointmentModel(appointmentData);
     await newAppointment.save();
 
-    
+
     await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
 
     res.json({ success: true, message: 'Appointment Booked' });
@@ -205,7 +219,7 @@ const bookAppointment = async (req, res) => {
 
 const listBooking = async (req, res) => {
   try {
-    const userId = req.userId; 
+    const userId = req.userId;
 
     const bookings = await appointmentModel.find({ userId });
 
@@ -275,7 +289,7 @@ const paymentRazorpay = async (req, res) => {
 
     }
 
-    
+
 
     const options = {
       amount: appointmentData.amount * 100,
@@ -283,7 +297,7 @@ const paymentRazorpay = async (req, res) => {
       receipt: appointmentId,
     }
 
-    
+
     const order = await razorpayInstance.orders.create(options)
 
     res.json({ success: true, order })
@@ -304,7 +318,7 @@ const verifyRazorpay = async (req, res) => {
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
 
-    
+
     if (orderInfo.status === 'paid') {
       await appointmentModel.findByIdAndUpdate(orderInfo.receipt, { payment: true })
       res.json({ success: true, message: "Payment Successfull" })
@@ -320,7 +334,7 @@ const verifyRazorpay = async (req, res) => {
     res.json({ success: false, message: error.message })
 
   }
-} 
+}
 
 
 
@@ -334,7 +348,7 @@ const forgotPassword = async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
 
-    
+
     const resetToken = crypto.randomBytes(32).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour
 
@@ -342,16 +356,16 @@ const forgotPassword = async (req, res) => {
     user.resetTokenExpiry = resetTokenExpiry;
     await user.save();
 
-    
+
     const transporter = nodemailer.createTransport({
-      service: "Gmail", 
+      service: "Gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    
+
     const resetLink = `http://localhost:5173/reset-password/${resetToken}`
 
 
@@ -407,6 +421,5 @@ const resetPassword = async (req, res) => {
 
 
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listBooking, cancelAppointment, paymentRazorpay, verifyRazorpay,forgotPassword,resetPassword}
-
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listBooking, cancelAppointment, paymentRazorpay, verifyRazorpay, forgotPassword, resetPassword }
 

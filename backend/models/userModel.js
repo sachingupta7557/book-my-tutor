@@ -1,5 +1,3 @@
-
-
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -7,22 +5,15 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     image: { type: String, default:"data:image/jpeg;base64,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"},
-    
-    
     address: { type: Object, default: {line1:'',line2:''} },
+    firstLogin: { type: Boolean, default: true },
     gender:{type:String,default:"Not Selected"},
     dob:{type:String,default:"Not Selected"},
     phone:{type:String,default:"0000000000"},
     resetToken: { type: String},
     resetTokenExpiry: Date 
-
-    
-
 })
 
 const userModel = mongoose.models.user || mongoose.model('user', userSchema)
-
-
-
 
 export default userModel 

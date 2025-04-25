@@ -215,68 +215,7 @@ const appointmentCancel = async (req, res) => {
 
    
 
-// const forgotPasswordTutor = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-//     const tutor = await tutorModel.findOne({ email });
-//     if (!tutor) return res.json({ success: false, message: 'Tutor not found' });
 
-   
-//     const resetToken = crypto.randomBytes(32).toString('hex');
-//     tutor.resetToken = resetToken;
-//     tutor.resetTokenExpiry = Date.now() + 3600000;  
-//     await tutor.save();
-
-//     const transporter = nodemailer.createTransport({
-//       service: 'Gmail',
-//       auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS,
-//       },
-//     });
-
-//     const resetLink = `${process.env.FRONTEND_URL2}/reset-password-tutor/${resetToken}`;
-
-    
-//     await transporter.sendMail({
-//       to: tutor.email,
-//       subject: 'Tutor Password Reset - BookMyTutor',
-//       html: `<p>Click <a href="${resetLink}">here</a> to reset your tutor account password. Valid for 1 hour.</p>`,
-//     });
-
-//     res.json({ success: true, message: 'Reset link sent to email' });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
-
-// const resetPasswordTutor = async (req, res) => {
-//   try {
-//     const { token } = req.params;  
-//     const { newPassword } = req.body; 
-
-    
-//     const tutor = await tutorModel.findOne({
-//       resetToken: token,
-//       resetTokenExpiry: { $gt: Date.now() },  
-//     });
-
-//     if (!tutor) return res.json({ success: false, message: 'Invalid or expired token' });
-
-//     const hashed = await bcrypt.hash(newPassword, 10);
-//     tutor.password = hashed;
-//     tutor.resetToken = undefined;  
-//     tutor.resetTokenExpiry = undefined;  
-//     await tutor.save();
-
-//     res.json({ success: true, message: 'Password reset successful' });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
 
  const forgotPasswordTutor = async (req, res) => {
   try {
