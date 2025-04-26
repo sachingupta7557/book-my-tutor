@@ -19,6 +19,7 @@ import TutorProfile from './pages/Tutor/TutorProfile';
 
 import ForgotPasswordTutor from './pages/Tutor/ForgotPasswordTutor';
 import ResetPasswordTutor from './pages/Tutor/ResetPasswordTutor';
+import UserList from './pages/Admin/UserList';
 
 const App = () => {
 
@@ -38,6 +39,8 @@ const App = () => {
           <Route path = '/all-bookings' element={<AllBookings/>} />
           <Route path = '/add-tutor' element={<AddTutor/>} />
           <Route path = '/tutor-list' element={<TutorsList/>} />
+          <Route path = '/user-list' element={<UserList/>} />
+
         
         
 
