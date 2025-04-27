@@ -270,9 +270,9 @@ const addTutor = async (req, res) => {
 
 }   
 
- const AllUsers = async (req, res) => {
+ const allUsers = async (req, res) => {
    try {
-       const users = await User.find().select('-password') // exclude password
+       const users = await userModel.find().select('-password') // exclude password
        res.status(200).json({ success: true, users })
    } catch (error) {
        res.status(500).json({ success: false, message: 'Failed to fetch users', error: error.message })
@@ -395,7 +395,7 @@ const appointmentCancel = async (req, res) => {
  }
 
  
-export { addTutor, loginAdmin, allTutors, appointmentsAdmin,appointmentCancel,adminDashboard,AllUsers }   
+export { addTutor, loginAdmin, allTutors, appointmentsAdmin,appointmentCancel,adminDashboard,allUsers}   
 
 
 

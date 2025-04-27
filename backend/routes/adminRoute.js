@@ -23,7 +23,7 @@
 
 
 import express from 'express'
-import { addTutor , adminDashboard, allTutors, appointmentCancel, appointmentsAdmin, loginAdmin,AllUsers} from '../controllers/adminController.js'
+import { addTutor , adminDashboard, allTutors, appointmentCancel, appointmentsAdmin, loginAdmin,allUsers} from '../controllers/adminController.js'
 import upload from '../middlewares/multer.js'
 import authAdmin from '../middlewares/authAdmin.js'
 import { changeAvailablity } from '../controllers/tutorController.js'
@@ -37,7 +37,7 @@ adminRouter.post('/change-availablity',authAdmin,changeAvailablity)
 adminRouter.get('/bookings',authAdmin,appointmentsAdmin)
 adminRouter.post('/cancel-appointment',authAdmin,appointmentCancel)
 adminRouter.get('/dashboard',authAdmin,adminDashboard)
-adminRouter.post('/all-users', authAdmin, AllUsers)
+adminRouter.get('/all-users', authAdmin, allUsers)
 
 
 

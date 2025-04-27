@@ -24,7 +24,7 @@ import authUser from '../middlewares/authUser.js'
 import upload from '../middlewares/multer.js'
 
 const userRouter = express.Router()
-
+userRouter.get('/list', userList);
 userRouter.post('/register',registerUser)
 userRouter.post('/login',loginUser)
 
@@ -38,7 +38,6 @@ userRouter.post('/verifyRazorpay',authUser,verifyRazorpay)
 userRouter.post('/forgot-password', forgotPassword)
 userRouter.post('/reset-password/:token', resetPassword)
 
-userRouter.get('/list', userList);
 
 
 

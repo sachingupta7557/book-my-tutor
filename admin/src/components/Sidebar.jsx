@@ -110,10 +110,10 @@ const Sidebar = () => {
           </NavLink>
 
           {/* 🆕 Added User List link */}
-          {/* <NavLink className={navItemStyle} to="/user-list">
+          <NavLink className={navItemStyle} to="/user-list">
             <img src={assets.people_icon} alt="Users" className="w-5" />
             <p className="hidden md:block">Users List</p>
-          </NavLink> */}
+          </NavLink>
         </ul>
       )}
 
