@@ -18,6 +18,8 @@
 // userRouter.post('/forgot-password', forgotPassword)
 // userRouter.post('/reset-password/:token', resetPassword)
 
+// export default userRouter
+
 import express from 'express'
 import { bookAppointment, cancelAppointment, getProfile, listBooking, loginUser, paymentRazorpay, registerUser,updateProfile, verifyRazorpay,forgotPassword,resetPassword, userList } from '../controllers/userController.js'
 import authUser from '../middlewares/authUser.js'

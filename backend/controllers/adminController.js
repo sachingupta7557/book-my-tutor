@@ -7,12 +7,34 @@
 // import userModel from "../models/userModel.js"
 
 
+// // DELETE a user
+// const deleteUser = async (req, res) => { 
+//    try {
+//      const { userId } = req.params;
+ 
+//      const user = await userModel.findByIdAndDelete(userId);
+ 
+//      if (!user) {
+//        return res.status(404).json({ success: false, message: 'User not found' });
+//      }
+ 
+//      res.json({ success: true, message: 'User deleted successfully' });
+//    } catch (error) {
+//      console.log(error);
+//      res.status(500).json({ success: false, message: error.message });
+//    }
+//  };
+
+
+
+ 
+
 // const addTutor = async (req, res) => {
 //    try {
 //       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
 //       const imageFile = req.file;
 
-     
+
 
 //       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
 //          return res.json({ success: false, message: "Missing Details" })
@@ -58,7 +80,7 @@
 //          about,
 //          fees,
 //          address: JSON.parse(address),
-         
+
 //          date: Date.now()
 //       }
 
@@ -73,6 +95,15 @@
 
 //    }
 
+// }
+
+// const allUsers = async (req, res) => {
+//    try {
+//       const users = await userModel.find().select('-password') // exclude password
+//       res.status(200).json({ success: true, users })
+//    } catch (error) {
+//       res.status(500).json({ success: false, message: 'Failed to fetch users', error: error.message })
+//    }
 // }
 
 
@@ -117,7 +148,7 @@
 
 // const appointmentsAdmin = async (req, res) => {
 //    try {
-//       const bookings = await appointmentModel.find({})             
+//       const bookings = await appointmentModel.find({})
 //       res.json({ success: true, bookings })
 
 //    } catch (error) {
@@ -132,41 +163,41 @@
 // const appointmentCancel = async (req, res) => {
 //    try {
 
-//      const { appointmentId } = req.body;
- 
-//      const appointmentData = await appointmentModel.findById(appointmentId);
- 
-//      if (!appointmentData) {
-//        return res.json({ success: false, message: 'Appointment not found' });
-//      }
- 
- 
- 
-//      await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
- 
-//      const { wonId, slotDate, slotTime } = appointmentData;
- 
-//      const tutorData = await tutorModel.findById(wonId);
-//      let slots_booked = tutorData.slots_booked;
- 
-//      if (slots_booked[slotDate]) {
-//        slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime);
-//        if (slots_booked[slotDate].length === 0) {
-//          delete slots_booked[slotDate];
-//        }
-//      }
- 
-//      await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
- 
-//      res.json({ success: true, message: 'Appointment Cancelled' });
-//    } catch (error) {
-//      console.log(error);
-//      res.json({ success: false, message: error.message });
-//    }
-//  }
+//       const { appointmentId } = req.body;
 
-  
-//  const adminDashboard = async (req,res) => {
+//       const appointmentData = await appointmentModel.findById(appointmentId);
+
+//       if (!appointmentData) {
+//          return res.json({ success: false, message: 'Appointment not found' });
+//       }
+
+
+
+//       await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+
+//       const { wonId, slotDate, slotTime } = appointmentData;
+
+//       const tutorData = await tutorModel.findById(wonId);
+//       let slots_booked = tutorData.slots_booked;
+
+//       if (slots_booked[slotDate]) {
+//          slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime);
+//          if (slots_booked[slotDate].length === 0) {
+//             delete slots_booked[slotDate];
+//          }
+//       }
+
+//       await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
+
+//       res.json({ success: true, message: 'Appointment Cancelled' });
+//    } catch (error) {
+//       console.log(error);
+//       res.json({ success: false, message: error.message });
+//    }
+// }
+
+
+// const adminDashboard = async (req, res) => {
 //    try {
 
 //       const tutors = await tutorModel.find({})
@@ -174,24 +205,27 @@
 //       const bookings = await appointmentModel.find({})
 
 //       const dashData = {
-//          tutors:tutors.length,
-//          bookings:bookings.length,
-//          students:users.length,
-//          latestBookings:bookings.reverse().slice(0,5)
+//          tutors: tutors.length,
+//          bookings: bookings.length,
+//          students: users.length,
+//          latestBookings: bookings.reverse().slice(0, 5)
 //       }
 
-//       res.json({success:true,dashData})
-      
+//       res.json({ success: true, dashData })
+
 //    } catch (error) {
 //       console.log(error);
 //       res.json({ success: false, message: error.message });
 
-      
-//    }
-//  }
 
- 
-// export { addTutor, loginAdmin, allTutors, appointmentsAdmin,appointmentCancel,adminDashboard }
+//    }
+// }
+
+
+// export { addTutor, loginAdmin, allTutors, appointmentsAdmin, appointmentCancel, adminDashboard, allUsers, deleteUser }
+
+
+
 
 import validator from "validator"
 import bcrypt from 'bcrypt'
@@ -202,12 +236,79 @@ import appointmentModel from "../models/appointmentModel.js"
 import userModel from "../models/userModel.js"
 
 
+// DELETE a user
+// const deleteUser = async (req, res) => {
+//    try {
+//      const { userId } = req.params;
+ 
+//      const user = await userModel.findByIdAndDelete(userId);
+ 
+//      if (!user) {
+//        return res.status(404).json({ success: false, message: 'User not found' });
+//      }
+ 
+//      res.json({ success: true, message: 'User deleted successfully' });
+//    } catch (error) {
+//      console.log(error);
+//      res.status(500).json({ success: false, message: error.message });
+//    }
+//  };
+
+// const deleteUser = async (req, res) => {
+//    try {
+//      const userId = req.params.userId;
+//      const deletedUser = await User.findByIdAndDelete(userId);
+ 
+//      if (!deletedUser) {
+//        return res.json({ success: false, message: 'User not found' });
+//      }
+ 
+//      res.json({ success: true, message: 'User deleted successfully' });
+//    } catch (error) {
+//      console.log(error);
+//      res.json({ success: false, message: error.message });
+//    }
+//  }; 
+ 
+// const deleteUser = async (req, res) => {
+//    try {
+//      const userId = req.params.userId;
+//      const deletedUser = await User.findByIdAndDelete(userId);
+ 
+//      if (!deletedUser) {
+//        return res.json({ success: false, message: 'User not found' });
+//      }
+ 
+//      res.json({ success: true, message: 'User deleted successfully' });
+//    } catch (error) {
+//      console.log(error);
+//      res.json({ success: false, message: error.message });
+//    }
+//  };
+
+const deleteUser = async (req, res) => {
+   try {
+     const { userId } = req.params;
+     const deletedUser = await userModel.findByIdAndDelete(userId);
+
+     if (!deletedUser) {
+       return res.status(404).json({ success: false, message: 'User not found' });
+     }
+
+     res.json({ success: true, message: 'User deleted successfully' });
+   } catch (error) {
+     console.log(error);
+     res.status(500).json({ success: false, message: error.message });
+   }
+};
+
+
 const addTutor = async (req, res) => {
    try {
       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
       const imageFile = req.file;
 
-     
+
 
       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
          return res.json({ success: false, message: "Missing Details" })
@@ -253,7 +354,7 @@ const addTutor = async (req, res) => {
          about,
          fees,
          address: JSON.parse(address),
-         
+
          date: Date.now()
       }
 
@@ -268,14 +369,14 @@ const addTutor = async (req, res) => {
 
    }
 
-}   
+}
 
- const allUsers = async (req, res) => {
+const allUsers = async (req, res) => {
    try {
-       const users = await userModel.find().select('-password') // exclude password
-       res.status(200).json({ success: true, users })
+      const users = await userModel.find().select('-password') // exclude password
+      res.status(200).json({ success: true, users })
    } catch (error) {
-       res.status(500).json({ success: false, message: 'Failed to fetch users', error: error.message })
+      res.status(500).json({ success: false, message: 'Failed to fetch users', error: error.message })
    }
 }
 
@@ -321,7 +422,7 @@ const allTutors = async (req, res) => {
 
 const appointmentsAdmin = async (req, res) => {
    try {
-      const bookings = await appointmentModel.find({})             
+      const bookings = await appointmentModel.find({})
       res.json({ success: true, bookings })
 
    } catch (error) {
@@ -336,41 +437,41 @@ const appointmentsAdmin = async (req, res) => {
 const appointmentCancel = async (req, res) => {
    try {
 
-     const { appointmentId } = req.body;
- 
-     const appointmentData = await appointmentModel.findById(appointmentId);
- 
-     if (!appointmentData) {
-       return res.json({ success: false, message: 'Appointment not found' });
-     }
- 
- 
- 
-     await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
- 
-     const { wonId, slotDate, slotTime } = appointmentData;
- 
-     const tutorData = await tutorModel.findById(wonId);
-     let slots_booked = tutorData.slots_booked;
- 
-     if (slots_booked[slotDate]) {
-       slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime);
-       if (slots_booked[slotDate].length === 0) {
-         delete slots_booked[slotDate];
-       }
-     }
- 
-     await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
- 
-     res.json({ success: true, message: 'Appointment Cancelled' });
-   } catch (error) {
-     console.log(error);
-     res.json({ success: false, message: error.message });
-   }
- }
+      const { appointmentId } = req.body;
 
-  
- const adminDashboard = async (req,res) => {
+      const appointmentData = await appointmentModel.findById(appointmentId);
+
+      if (!appointmentData) {
+         return res.json({ success: false, message: 'Appointment not found' });
+      }
+
+
+
+      await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+
+      const { wonId, slotDate, slotTime } = appointmentData;
+
+      const tutorData = await tutorModel.findById(wonId);
+      let slots_booked = tutorData.slots_booked;
+
+      if (slots_booked[slotDate]) {
+         slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime);
+         if (slots_booked[slotDate].length === 0) {
+            delete slots_booked[slotDate];
+         }
+      }
+
+      await tutorModel.findByIdAndUpdate(wonId, { slots_booked });
+
+      res.json({ success: true, message: 'Appointment Cancelled' });
+   } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+   }
+}
+
+
+const adminDashboard = async (req, res) => {
    try {
 
       const tutors = await tutorModel.find({})
@@ -378,25 +479,21 @@ const appointmentCancel = async (req, res) => {
       const bookings = await appointmentModel.find({})
 
       const dashData = {
-         tutors:tutors.length,
-         bookings:bookings.length,
-         students:users.length,
-         latestBookings:bookings.reverse().slice(0,5)
+         tutors: tutors.length,
+         bookings: bookings.length,
+         students: users.length,
+         latestBookings: bookings.reverse().slice(0, 5)
       }
 
-      res.json({success:true,dashData})
-      
+      res.json({ success: true, dashData })
+
    } catch (error) {
       console.log(error);
       res.json({ success: false, message: error.message });
 
-      
+
    }
- }
-
- 
-export { addTutor, loginAdmin, allTutors, appointmentsAdmin,appointmentCancel,adminDashboard,allUsers}   
+}
 
 
-
-
+export { addTutor, loginAdmin, allTutors, appointmentsAdmin, appointmentCancel, adminDashboard, allUsers, deleteUser }
