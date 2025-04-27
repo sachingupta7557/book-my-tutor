@@ -35,7 +35,8 @@ const AddTutor = () => {
       formData.append('email', email)
       formData.append('password', password)
       formData.append('experience', experience)
-      formData.append('fees', Number(fees))
+      // formData.append('fees', Number(fees))
+      formData.append('fees', fees)
       formData.append('about', about)
       formData.append('speciality', speciality)
       formData.append('degree', degree)
@@ -45,7 +46,17 @@ const AddTutor = () => {
         console.log(`${key} : ${value}`);
       })
 
-      const { data } = await axios.post(backendUrl + '/api/admin/add-tutor', formData, { headers: { aToken } })
+      // const { data } = await axios.post(backendUrl + '/api/admin/add-tutor', formData, { headers: { aToken } })
+
+      const {data} = await axios.post(
+        `${backendUrl}/api/admin/add-tutor`,
+         formData ,
+        {
+          headers: {
+            Authorization: `Bearer ${aToken}`,
+          },
+        }
+      );
       if (data.success) {
         toast.success(data.message)
         setWonImg(false)

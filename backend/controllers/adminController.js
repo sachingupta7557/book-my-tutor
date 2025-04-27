@@ -302,6 +302,24 @@ const deleteUser = async (req, res) => {
    }
 };
 
+//  ------------- Delete tutor -------- //
+
+const deleteTutor = async (req, res) => {
+   try {
+     const { wonId } = req.params;
+     const deletedTutor = await tutorModel.findByIdAndDelete(wonId);
+
+     if (!deletedTutor) {
+       return res.status(404).json({ success: false, message: 'Tutor not found' });
+     }
+
+     res.json({ success: true, message: 'Tutor deleted successfully' });
+   } catch (error) {
+     console.log(error);
+     res.status(500).json({ success: false, message: error.message });
+   }
+};
+
 
 const addTutor = async (req, res) => {
    try {
@@ -496,4 +514,4 @@ const adminDashboard = async (req, res) => {
 }
 
 
-export { addTutor, loginAdmin, allTutors, appointmentsAdmin, appointmentCancel, adminDashboard, allUsers, deleteUser }
+export { addTutor, loginAdmin, allTutors, appointmentsAdmin, appointmentCancel, adminDashboard, allUsers, deleteUser,deleteTutor }

@@ -262,6 +262,23 @@ const AdminContextProvider = (props) => {
       toast.error(error.response?.data?.message || "Error deleting user");
     }
   };
+  // Delete a tutor
+  const deleteTutorById = async (wonId) => {
+    try {
+      const res = await axios.delete(`${backendUrl}/api/admin/delete-tutor/${wonId}`, {
+        headers: authHeaders,
+      });
+      if (res.data.success) {
+        toast.success('Tutor deleted successfully');
+        getAllTutors();
+      } else {
+        toast.error('Failed to delete tutor');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Error deleting tutor");
+    }
+  };
 
   const changeAvailablity = async (wonId) => {
     try {
@@ -322,7 +339,12 @@ const AdminContextProvider = (props) => {
     backendUrl, tutors, getAllTutors, changeAvailablity,
     bookings, setBookings, getAllBookings, cancelAppointment,
     dashData, getDashData,
-    users, getAllUsers, deleteUserById
+    users, getAllUsers, deleteUserById,
+    deleteTutorById
+    
+
+    
+
   };
 
   return (
@@ -333,6 +355,8 @@ const AdminContextProvider = (props) => {
 };
 
 export default AdminContextProvider;
+
+
 
 
 

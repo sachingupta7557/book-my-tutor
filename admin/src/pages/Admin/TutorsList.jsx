@@ -3,7 +3,7 @@ import { AdminContext } from '../../context/AdminContext'
 
 const TutorsList = () => {
 
-  const { tutors , aToken , getAllTutors,changeAvailablity} = useContext(AdminContext)
+  const { tutors , aToken , getAllTutors,changeAvailablity,deleteTutorById} = useContext(AdminContext)
 
   useEffect(()=>{
     if (aToken){
@@ -19,6 +19,14 @@ const TutorsList = () => {
           tutors.map((item,index)=>(
             <div className='border border-indigo-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key = {index}>
               <img className='bg-indigo-50 group-hover:bg-primary tranition-all duration-500' src={item.image} alt="" />
+
+
+              <button
+                  onClick={() => deleteTutorById(item._id)}
+                  className="mt-2 px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                >
+                  Delete
+                </button>
               <div className='p-4'>
                 <p className='text-neutral-800 text-lg font-medium'>{item.name}</p>
                 <p className='text-zinc-600 text-sm'>{item.speciality}</p>

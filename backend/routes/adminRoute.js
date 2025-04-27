@@ -1,5 +1,5 @@
 import express from 'express'
-import { addTutor , adminDashboard, allTutors, appointmentCancel, appointmentsAdmin, loginAdmin,allUsers,deleteUser} from '../controllers/adminController.js'
+import { addTutor , adminDashboard, allTutors, appointmentCancel, appointmentsAdmin, loginAdmin,allUsers,deleteUser, deleteTutor} from '../controllers/adminController.js'
 import upload from '../middlewares/multer.js'
 import authAdmin from '../middlewares/authAdmin.js'
 import { changeAvailablity } from '../controllers/tutorController.js'
@@ -16,6 +16,8 @@ adminRouter.get('/dashboard',authAdmin,adminDashboard)
 adminRouter.get('/all-users', authAdmin, allUsers)
 
 adminRouter.delete('/delete-user/:userId', authAdmin, deleteUser);
+
+adminRouter.delete('/delete-tutor/:wonId', authAdmin, deleteTutor);
 
 export default adminRouter;
 
