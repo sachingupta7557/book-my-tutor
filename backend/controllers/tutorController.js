@@ -228,7 +228,7 @@ const appointmentCancel = async (req, res) => {
     const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex')
 
     tutor.resetToken = hashedToken
-    tutor.resetTokenExpiry = Date.now() + 15 * 60 * 1000 // 15 mins
+    tutor.resetTokenExpiry = Date.now() + 15 * 60 * 1000 
     await tutor.save()
 
     const resetURL = `${process.env.FRONTEND_URL2}/reset-password-tutor/${resetToken}`
