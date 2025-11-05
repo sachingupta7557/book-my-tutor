@@ -8,7 +8,7 @@ const AppContextProvider = (props) => {
 
     const currencySymbol = '$'
     const backendUrl = import.meta.env.VITE_BACKEND_URL
-   // const backendUrl = "https://book-my-tutor-2vfu.onrender.com"
+   
 
     const [tutors,setTutors] = useState([])
     const [token,setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):false)
