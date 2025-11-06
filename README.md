@@ -17,7 +17,7 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 ## Screenshots
 
 ![image](./assets/screenshots/Login.png)
-![image](./assets/screenshots/Tutor Listing.png)
+
 
    
 
