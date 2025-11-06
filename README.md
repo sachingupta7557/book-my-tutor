@@ -26,6 +26,7 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 ## Installation and Setup
 
  1. Clone the repository to your local machine
+     ```bash
      git clone https://github.com/sachingupta7557/book-my-tutor.git
 
 
