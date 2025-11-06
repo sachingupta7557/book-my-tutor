@@ -18,6 +18,4 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 
 
 
-   
-
 
