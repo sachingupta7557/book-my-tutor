@@ -30,8 +30,9 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
      git clone https://github.com/sachingupta7557/book-my-tutor.git
 
  2. Install dependencies for frontend,backend and admin
-    ``` bash
+    ```bash
    cd BOOKMYTUTOR
+   
    *Step-1: Start backend
              cd backend
              npm install
@@ -40,7 +41,7 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
              cd frontend
              npm install
 
-    *Step-3: Start admin
+   *Step-3: Start admin
              cd admin
              npm install
  
