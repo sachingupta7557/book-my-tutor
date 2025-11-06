@@ -18,10 +18,7 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 
 ![image](./assets/screenshots/Login.png)
 ![image](./assets/screenshots/Tutor Listing.png)
-![image](./assets/screenshots/Booking.png)
-![image](./assets/screenshots/Screenshot 2025-11-06 083128.png)
-![image](./assets/screenshots/Screenshot 2025-11-06 083143.png)
-![image](./BOOKMYTUTOR/assets/screenshots/Screenshot 2025-11-06 083221.png)
+
    
 
 
