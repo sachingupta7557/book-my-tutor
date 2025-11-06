@@ -31,19 +31,39 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 
  2. Install dependencies for frontend,backend and admin
     ``` bash
-    Step-1 : cd BOOKMYTUTOR
+   
+   cd BOOKMYTUTOR
 
-    Step-2 : backend
+   Start backend
              cd backend
              npm install
 
-    Step-3 : frontend
+   Start frontend
              cd frontend
              npm install
 
-    Step-4 : admin
+    Start admin
              cd admin
              npm install
+ 
+ 3. Run the Project
+    ```bash
+    
+    Start backend
+       cd backend
+       npm start
+
+    Start frontend
+       cd frontend
+       npm start
+   
+    Start admin
+       cd admin
+       npm start
+
+4. Access the application in your web browser for frontend at http://localhost:5173
+
+5. Access the application in your web browser for admin at  http://localhost:5174
  
     
     
