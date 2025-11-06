@@ -9,6 +9,7 @@ import razorpay from 'razorpay'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -31,18 +32,15 @@ const registerUser = async (req, res) => {
       return res.json({ success: false, message: "User already exists" });
     }
 
+    // 2. Create user
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const userData = {
+    const user = await userModel.create({
       name,
       email,
       password: hashedPassword
-    };
-
-    const newUser = new userModel(userData);
-    const user = await newUser.save();
-
+    });
 
     try {
       const transporter = nodemailer.createTransport({
@@ -55,31 +53,34 @@ const registerUser = async (req, res) => {
 
       await transporter.sendMail({
         to: email,
-        subject: "Welcome to BookMyTutor 🎉",
+        subject: "Welcome to BookMyTutor ",
         html: `
           <h2>Hi ${name},</h2>
-          <p>Welcome to <strong>BookMyTutor</strong>! We're excited to have you on board.</p>
-          <p>Start booking your favorite tutors now 🚀</p>
+          <p>Welcome to <strong>BookMyTutor</strong>!</p>
         `
       });
-
-      console.log(` Welcome email sent to ${email}`);
     } catch (mailError) {
-      console.error(` Failed to send welcome email to ${email}:`, mailError.message);
+      console.log("Email failed:", mailError.message);
+
     }
 
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ success: true, token });
+    return res.json({ success: true, token });
 
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.log("Signup error:", error.message);
+    return res.json({
+      success: false,
+      message: "Signup failed. Try again."
+    });
   }
 };
 
+
 const userList = async (req, res) => {
   try {
-    const users = await userModel.find().select('-password'); 
+    const users = await userModel.find().select('-password');
     res.json({ success: true, users });
   } catch (error) {
     console.log(error);
@@ -432,5 +433,5 @@ const resetPassword = async (req, res) => {
 
 
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listBooking, cancelAppointment, paymentRazorpay, verifyRazorpay, forgotPassword, resetPassword,userList }
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listBooking, cancelAppointment, paymentRazorpay, verifyRazorpay, forgotPassword, resetPassword, userList }
 
