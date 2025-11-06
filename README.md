@@ -32,15 +32,15 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
  2. Install dependencies for frontend,backend and admin
     ``` bash
    cd BOOKMYTUTOR
-   Start backend
+   *Step-1: Start backend
              cd backend
              npm install
 
-   Start frontend
+   *Step-2: Start frontend
              cd frontend
              npm install
 
-    Start admin
+    *Step-3: Start admin
              cd admin
              npm install
  
