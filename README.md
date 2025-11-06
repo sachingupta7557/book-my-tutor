@@ -31,14 +31,14 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 
  2. Install dependencies for frontend,backend and admin
     ``` bash
-    * Step-1 : cd BOOKMYTUTOR
-    * Step-2 : --> backend
+     Step-1 : cd BOOKMYTUTOR
+     Step-2 : backend
             cd backend
             npm install
-    * Step-3 : --> frontend
+    Step-3 : frontend
             cd frontend
             npm install
-    * Step-4 : --> admin
+    Step-4 : admin
             cd admin
             npm install
  
