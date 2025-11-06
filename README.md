@@ -23,6 +23,11 @@ Users can browse tutors, view profiles, and book sessions easily through an inte
 ![image5](/assets/screenshots/User.png)
 ![image6](/assets/screenshots/AddTutor.png)
 
+## Installation and Setup
+
+ 1. Clone the repository to your local machine
+     git clone 
+
 
 
 
