@@ -9,13 +9,12 @@ import razorpay from 'razorpay'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
-
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    if (!name || !password || !email) {
-      return res.json({ success: false, message: "Missing Details" });
+    if (!name || !email || !password) {
+      return res.json({ success: false, message: "Missing details" });
     }
 
     if (!validator.isEmail(email)) {
@@ -23,50 +22,49 @@ const registerUser = async (req, res) => {
     }
 
     if (password.length < 8) {
-      return res.json({ success: false, message: "Enter a strong password" });
+      return res.json({ success: false, message: "Password must be at least 8 characters" });
     }
-
 
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.json({ success: false, message: "User already exists" });
     }
 
-    // 2. Create user
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    
     const user = await userModel.create({
       name,
       email,
       password: hashedPassword
     });
 
-    try {
-      const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
-
-      await transporter.sendMail({
-        to: email,
-        subject: "Welcome to BookMyTutor ",
-        html: `
-          <h2>Hi ${name},</h2>
-          <p>Welcome to <strong>BookMyTutor</strong>!</p>
-        `
-      });
-    } catch (mailError) {
-      console.log("Email failed:", mailError.message);
-
-    }
-
-
+    
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    return res.json({ success: true, token });
+
+  
+    res.json({ success: true, token });
+
+   
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    transporter
+      .sendMail({
+        to: email,
+        subject: "Welcome to BookMyTutor",
+        html: `<h2>Hi ${name},</h2><p>Welcome to <strong>BookMyTutor</strong>!</p>`
+      })
+      .catch(err => console.log("Email failed:", err.message));
 
   } catch (error) {
     console.log("Signup error:", error.message);
@@ -76,6 +74,75 @@ const registerUser = async (req, res) => {
     });
   }
 };
+
+
+
+// const registerUser = async (req, res) => {
+//   try {
+//     const { name, email, password } = req.body;
+
+//     if (!name || !password || !email) {
+//       return res.json({ success: false, message: "Missing Details" });
+//     }
+
+//     if (!validator.isEmail(email)) {
+//       return res.json({ success: false, message: "Enter a valid email" });
+//     }
+
+//     if (password.length < 8) {
+//       return res.json({ success: false, message: "Enter a strong password" });
+//     }
+
+
+//     const existingUser = await userModel.findOne({ email });
+//     if (existingUser) {
+//       return res.json({ success: false, message: "User already exists" });
+//     }
+
+//     // 2. Create user
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(password, salt);
+
+//     const user = await userModel.create({
+//       name,
+//       email,
+//       password: hashedPassword
+//     });
+
+//     try {
+//       const transporter = nodemailer.createTransport({
+//         service: "Gmail",
+//         auth: {
+//           user: process.env.EMAIL_USER,
+//           pass: process.env.EMAIL_PASS
+//         }
+//       });
+
+//       await transporter.sendMail({
+//         to: email,
+//         subject: "Welcome to BookMyTutor ",
+//         html: `
+//           <h2>Hi ${name},</h2>
+//           <p>Welcome to <strong>BookMyTutor</strong>!</p>
+//         `
+//       });
+//     } catch (mailError) {
+//       console.log("Email failed:", mailError.message);
+
+//     }
+
+
+//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+//     return res.json({ success: true, token });
+
+//   } catch (error) {
+//     console.log("Signup error:", error.message);
+//     return res.json({
+//       success: false,
+//       message: "Signup failed. Try again."
+//     });
+//   }
+// };
 
 
 const userList = async (req, res) => {
